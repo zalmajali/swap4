@@ -66,7 +66,7 @@ export class AppComponent {
     this.firebaseMessaging.requestPermission({forceShow: false}).then(function() {
       console.log("Push messaging is allowed");
     });
-    await this.firebaseMessaging.subscribe("swapkotest");
+    await this.firebaseMessaging.subscribe("swapko");
     await this.firebaseMessaging.onMessage().subscribe(async (data:any)=>{
       if(this.platform.is('ios') || this.platform.is('ipad') || this.platform.is('iphone')){
         this.titlePush = data.aps.alert.title;
