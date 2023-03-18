@@ -1,0 +1,134 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="headerToolbar">
+    <ion-title>
+        <div class="palanceText"> رصيد الخدمات </div>
+        <div class="palancePoints">{{points}}</div>
+        <div class="point">نقطة<br>مقايضة</div>
+    </ion-title>
+    <ion-buttons slot="start">
+       <div (click)="functionOpenMenue()"><img src="../../assets/imgs/Group871.png" style="width:28px"></div>
+       <div (click)="functionPushNotifications()" style="padding-right:20px"><img src="../../assets/imgs/alert.png" style="width:17px"></div>
+       <ion-badge *ngIf="newNotifications!=0" class="classValData" slot="start" mode='ios'>{{newNotifications}}</ion-badge>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<ion-refresher slot="fixed" (ionRefresh)="refrechAllPage($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+    <div style="padding:20px">
+      <div style="margin-top: 10px;width:100%;text-align:center">
+            <div>
+            	<img src="{{userImage}}" style="width: 130px;height:130px;border-radius:100%" alt="">
+            </div>
+            <div class="userName">{{userFullName}}</div>
+            <div class="userNameEdit">{{userMobile}}</div>
+      </div>
+       <div style="padding-bottom:15px; padding-top:10px">
+           <form style="display: contents;" (ngSubmit)="updateAccount()">
+            <div class="paddingBottom">
+                <ion-item lines="none">
+                    <ion-input  type="text" [(ngModel)]="firstFileVal" [ngModelOptions]="{standalone: true}" placeholder="الصورة الشخصية" ></ion-input>
+                    <span class="class962" (click)="uploadeSecondFile()">
+                       تحميل
+                    </span>
+                </ion-item>
+            </div>
+             <div class="paddingBottom">
+                <ion-item lines="none">
+                    <ion-input  type="text" [(ngModel)]="foreFileVal" [ngModelOptions]="{standalone: true}" placeholder="صورة الخدمة"></ion-input>
+                    <span class="class962" (click)="uploadeForeFile()">
+                       تحميل
+                    </span>
+                </ion-item>
+            </div>
+             <div class="paddingBottom">
+                <ion-item lines="none" class="{{errorUserName}}">
+                    <ion-input type="text" [(ngModel)]="userName" [ngModelOptions]="{standalone: true}" placeholder="الاسم" (ionInput)="checkUserName($event)"></ion-input>
+                </ion-item>
+                <div class="errorTitle" *ngIf="isErrorUserName == 0">الرجاء إدخال الاسم</div>
+            </div>
+            <div class="paddingBottom">
+               <ion-item lines="none" class="{{errorCat}}">
+                    <ion-select value="{{catIdUser}}" (ionChange)="selectCatValues($event)" placeholder="تصنيف الخدمة المقدمة" mode="ios" interface="popover" class="my-custom-interface">
+                      <ion-select-option *ngFor="let items of returnCategoriesArray" value="{{items.id}}">{{items.title}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <div class="errorTitle" *ngIf="isErrorCat== 0">الرجاء إختيار تصنيف مقدم الخدمة</div>
+            </div>
+             <div class="paddingBottom">
+               <ion-item lines="none" class="{{errorSubCat}}">
+                    <ion-select value="{{subCatIdUser}}" (ionChange)="selectSubCatValues($event)"  placeholder="التصنيف الفرعي" mode="ios" interface="popover" class="my-custom-interface">
+                       <ion-select-option value="">إختر</ion-select-option>
+                      <ion-select-option *ngFor="let items of returnsubCatArray" value="{{items.id}}">{{items.title}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <div class="errorTitle" *ngIf="isErrorSubCat== 0">الرجاء إختيار التصنيف الفرعي</div>
+            </div>
+            
+            <div class="paddingBottom">
+                <ion-item lines="none" class="{{errorCommercialName}}">
+                    <ion-input type="text" [(ngModel)]="commercialName" [ngModelOptions]="{standalone: true}" placeholder="الأسم التجاري" (ionInput)="checkCommercialName($event)"></ion-input>
+                </ion-item>
+                <div class="errorTitle" *ngIf="isErrorCommercialName == 0">الرجاء الأسم التجاري</div>
+            </div>
+            <div class="paddingBottom">
+               <ion-item lines="none" class="{{errorCity}}">
+                    <ion-select value="{{cityId}}" (ionChange)="selectCityValues($event)"  placeholder="المدينة" mode="ios" interface="popover" class="my-custom-interface">
+                      <ion-select-option *ngFor="let items of returnCitysArray" value="{{items.id}}">{{items.title}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <div class="errorTitle" *ngIf="isErrorCity== 0">الرجاء إختيار المدينة</div>
+            </div>
+             <div class="paddingBottom">
+               <ion-item lines="none" class="{{errorRegion}}">
+                    <ion-select value="{{regionId}}" (ionChange)="selectRegionValues($event)"  placeholder="المنطقة" mode="ios" interface="popover" class="my-custom-interface">
+                       <ion-select-option value="">إختر</ion-select-option>
+                      <ion-select-option *ngFor="let items of returnRegionsArray" value="{{items.id}}">{{items.title}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <div class="errorTitle" *ngIf="isErrorRegion== 0">الرجاء إختيار المنطقة</div>
+            </div>
+            <div class="paddingBottom">
+                <ion-item lines="none" class="{{errorServiceDetails}}">
+                    <ion-textarea rows="5" [(ngModel)]="serviceDetails" [ngModelOptions]="{standalone: true}" placeholder="تفاصيل الخدمة المقدمة" (ionInput)="checkServiceDetails($event)"></ion-textarea>
+                </ion-item>
+                <div class="errorTitle" *ngIf="isErrorServiceDetails == 0">الرجاء إدخال تفاصيل الخدمة المقدمة</div>
+            </div>
+            <div>
+              <div class="divButtonClass">
+                <ion-button class="oneButton fontSize18" (click)="updateAccount()" id="submit" disabled="{{!isdisabled}}"><span style="font-size:15px;padding-top:4px">تعديل</span></ion-button>
+              </div>
+            </div>
+            <button style="visibility:hidden" id="submit" ion-button type="submit" ></button>
+            </form>
+       </div>
+    </div>
+</ion-content>
+<div class="menueValues"><img (click)="functionGoToSendPoint()" src="../../assets/imgs/sendPoint.png" style="width:70px"></div>
+<ion-footer class="ion-no-border">
+    <ion-toolbar class="footerToolbar">
+        <div class="width100">
+            <div class="menueClass"  (click)="functionGoToHome()">
+                <div><img src="../../assets/imgs/Group862.png" style="width:20px"></div>
+                <div class="labelClass">الرئيسية</div>
+            </div>
+            <div class="menueClass" (click)="functionGoInvitations()">
+                <div><img src="../../assets/imgs/Group863.png" style="width:18px"></div>
+                <div class="labelClass">الدعوات</div>
+            </div>
+            <div class="menueClass" (click)="functionGoToSendPoint()">
+                <div style="height:28px"></div>
+                <div class="labelClass" style="font-size:15px">إرسال نقاط</div>
+            </div>
+            <div class="menueClass" (click)="functionGoToArchives()">
+                <div><img src="../../assets/imgs/Group865.png" style="width:18px"></div>
+                <div class="labelClass">السجل</div>
+            </div>
+            <div class="menueClass">
+                <div><img src="../../assets/imgs/GroupSelect866.png" style="width:18px"></div>
+                <div class="labelClass">حسابي</div>
+            </div>
+        </div>
+    </ion-toolbar>
+</ion-footer>

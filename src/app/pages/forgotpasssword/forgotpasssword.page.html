@@ -1,0 +1,30 @@
+<ion-content>
+<div style="padding-top:33px" (click)="functionOpenMenue()"><img src="../../assets/imgs/Group871.png" style="width:28px"></div>
+    <div style="margin-top:80px; text-align:center">
+        <img style="width:125px;" src="../../assets/imgs/Group.png" >
+    </div>
+    <div class="firstTitle fontSize20 fontweight1">
+        نسيت كلمة المرور
+    </div>
+    <div style="padding-top:50px">
+        <form style="display: contents;" (ngSubmit)="forgotPassword()">
+            <div class="paddingBottom">
+                <ion-item lines="none" class="{{errorNumber}}">
+                	<ion-input style="border-left:1px solid #B0AFB0;" type="number" [(ngModel)]="number" [ngModelOptions]="{standalone: true}" placeholder="رقم الجوال مثال 782345678" (ionInput)="checkNumber($event)"></ion-input>
+                    <span class="class962">
+                    	<div style="color:#000000"> <img src="../../assets/imgs/jo.png" style="width:15px; border-radius:10px"> 
+                        <span style="vertical-align:top; padding-left:3px;padding-right:3px;font-size: 14px;">+962</span>
+                        <ion-icon name="caret-down-outline" style="width:15px; color:#000000;"></ion-icon></div>
+                    </span>
+                </ion-item>
+                <div class="errorTitle" *ngIf="isErrorNumber == 0">الرجاء إدخال رقم الجوال</div>
+            </div> 
+            <div>
+                <div class="divButtonClass">
+                	<ion-button class="oneButton fontSize18" (click)="forgotPassword()" id="submit" disabled="{{!isdisabled}}"><span style="font-size:15px;padding-top:4px">إسترجاع</span></ion-button>
+                </div>
+            </div>
+            <button style="visibility:hidden" id="submit" ion-button type="submit" ></button>
+        </form>
+    </div>
+</ion-content>
