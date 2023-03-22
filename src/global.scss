@@ -97,10 +97,10 @@
 	--background: linear-gradient(-90deg,  #d1d0d0, #f9f9f9) !important;
 	--min-width:350px;
 }
-.alert-wrapper.sc-ion-alert-ios{
+.alertBacPush .alert-wrapper{
 	padding: 16px !important;
 }
-.alert-wrapper.sc-ion-alert-md{
+.alertBacPush .alert-wrapper{
 	padding: 16px !important;
 }
 .alert-title.sc-ion-alert-ios {
@@ -162,7 +162,12 @@
 	--color-checked:#ED2224 !important;
 }
 .sc-ion-label-ios-h{
-	padding-right:20px	
+	padding-right:20px	;
+	color:#ED2224 !important;
+}
+.sc-ion-label-md-h{
+	padding-right:20px	;
+	color:#ED2224 !important;
 }
 .select-interface-option{
 	direction:rtl;
